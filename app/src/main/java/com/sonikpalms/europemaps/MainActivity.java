@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(GoogleMap map) {
-      
+
 
 
         //север восток, юго запад
@@ -78,11 +78,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 toast.show();
             }
         });
-
-
-
-
-
 
     }
 
