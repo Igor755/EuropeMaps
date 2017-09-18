@@ -8,8 +8,8 @@ import retrofit2.http.GET;
 
 public class Link {
 
-    @GET("/maps/api/direction/json")
-    Call<MyItemsGson> getMyJson() {
-        return null;
-    }
+   // @GET("/maps/api/direction/json")
+    //Call<MyItemsGson> getMyJson() {
+       // return null;
+   // }
 }
