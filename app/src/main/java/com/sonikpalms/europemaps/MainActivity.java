@@ -1,8 +1,12 @@
 package com.sonikpalms.europemaps;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Address;
 import android.location.Geocoder;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -52,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap map) {
 
 
-
         //север восток, юго запад
         LatLngBounds Europe = new LatLngBounds(
                 new LatLng(50, 10), new LatLng(50, 10));
@@ -68,19 +71,50 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
+
             @Override
             public void onMapClick(LatLng latLng) {
 
 
+                List<Address> addresses = null;
 
-                Toast toast = Toast.makeText(getApplicationContext(),"onMapClick: " + latLng.latitude + "," + latLng.longitude,Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER,0,0);
-                toast.show();
+                Geocoder geocoder = new Geocoder(getApplicationContext());
+
+                try {
+                    addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude,1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if(addresses != null && addresses.size() > 0 ) {
+
+
+                    Address address = addresses.get(0);
+
+
+                    address.getCountryName();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("Важное сообщение!")
+                            .setMessage(address.getCountryName())
+                            .setIcon(R.drawable.ic_warning_black_48dp)
+                            .setCancelable(false)
+                            .setNegativeButton("ОК",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+
+                }
+
             }
+
+
         });
-
     }
-
 
 }
 
